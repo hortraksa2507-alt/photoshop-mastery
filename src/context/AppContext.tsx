@@ -99,7 +99,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     // Try to get Telegram user data
     let telegramUser: UserProfile | null = null;
     try {
-      const tg = (window as Record<string, unknown>).Telegram as {
+      const tg = (window as unknown as Record<string, unknown>).Telegram as {
         WebApp?: {
           initDataUnsafe?: {
             user?: {

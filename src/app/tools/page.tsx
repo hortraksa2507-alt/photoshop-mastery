@@ -60,13 +60,13 @@ export default function ToolsPage() {
   };
 
   return (
-    <div className="min-h-screen p-8 pb-16">
+    <div className="min-h-screen p-4 md:p-8 pb-16">
       <div className="max-w-6xl mx-auto">
         <header className="mb-8 opacity-0 animate-fade-in-up">
-          <p className="text-sm font-semibold tracking-wide uppercase mb-2" style={{ color: "var(--accent-primary)", letterSpacing: "0.08em" }}>
+          <p className="ml-10 md:ml-0 text-sm font-semibold tracking-wide uppercase mb-2" style={{ color: "var(--accent-primary)", letterSpacing: "0.08em" }}>
             Tools Encyclopedia
           </p>
-          <h1 className="text-4xl mb-2 font-semibold tracking-tight" style={{ color: "var(--text-primary)" }}>
+          <h1 className="text-2xl md:text-4xl mb-2 font-semibold tracking-tight" style={{ color: "var(--text-primary)" }}>
             Every Tool, Explained
           </h1>
           <p style={{ color: "var(--text-secondary)", fontSize: "15px" }}>
@@ -74,8 +74,8 @@ export default function ToolsPage() {
           </p>
         </header>
 
-        <div className="flex items-center gap-4 mb-8 opacity-0 animate-fade-in-up stagger-1">
-          <div className="relative flex-1 max-w-sm">
+        <div className="flex flex-col md:flex-row items-start md:items-center gap-3 md:gap-4 mb-8 opacity-0 animate-fade-in-up stagger-1">
+          <div className="relative flex-1 max-w-full md:max-w-sm">
             <input
               type="text"
               placeholder="Search tools or shortcuts..."

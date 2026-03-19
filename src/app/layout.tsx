@@ -37,8 +37,9 @@ export default function RootLayout({
         />
         <AppProvider>
           <Sidebar />
-          <div className="flex-1 ml-[72px] flex flex-col h-screen">
-            <div className="claude-stripe" />
+          {/* Main content: ml-[72px] on desktop, ml-0 on mobile */}
+          <div className="flex-1 md:ml-[72px] ml-0 flex flex-col h-screen">
+            <div className="ps-stripe" />
             <main className="flex-1 overflow-y-auto">
               {children}
             </main>

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useApp } from "@/context/AppContext";
+import { useState, useEffect } from "react";
 
 const navItems = [
   {
@@ -38,7 +39,7 @@ const navItems = [
   },
   {
     href: "/shortcuts",
-    label: "Keyboard Shortcuts",
+    label: "Shortcuts",
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
         <rect x="2" y="4" width="20" height="16" rx="2" />
@@ -48,7 +49,7 @@ const navItems = [
   },
   {
     href: "/challenges",
-    label: "Practice Challenges",
+    label: "Challenges",
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
         <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
@@ -71,78 +72,161 @@ export default function Sidebar() {
   const pathname = usePathname();
   const { state } = useApp();
   const user = state.user;
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
+  // Close mobile sidebar on navigation
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [pathname]);
 
   return (
-    <aside
-      className="fixed left-0 top-0 bottom-0 w-[72px] flex flex-col items-center py-4 z-50"
-      style={{ background: "var(--bg-sidebar)", borderRight: "1px solid var(--border-subtle)" }}
-    >
-      {/* Claude-inspired Ps Logo */}
-      <Link href="/" className="mb-6 group">
-        <div
-          className="w-10 h-10 rounded-xl flex items-center justify-center text-white font-semibold text-base transition-all duration-200 group-hover:scale-105 group-hover:shadow-lg"
-          style={{
-            background: "linear-gradient(135deg, #D97757 0%, #C4683E 100%)",
-            fontFamily: "var(--font-body)",
-            letterSpacing: "-0.5px",
-            boxShadow: "0 2px 8px rgba(217, 119, 87, 0.3)",
-          }}
+    <>
+      {/* Mobile hamburger button */}
+      {isMobile && (
+        <button
+          onClick={() => setMobileOpen(true)}
+          className="fixed top-3 left-3 z-50 w-10 h-10 rounded-lg flex items-center justify-center transition-all active:scale-95"
+          style={{ background: "var(--bg-sidebar)", border: "1px solid var(--border-subtle)" }}
+          aria-label="Open menu"
         >
-          Ps
-        </div>
-      </Link>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--text-secondary)" strokeWidth="2" strokeLinecap="round">
+            <path d="M3 12h18M3 6h18M3 18h18" />
+          </svg>
+        </button>
+      )}
 
-      {/* Nav */}
-      <nav className="flex flex-col items-center gap-1 flex-1">
-        {navItems.map((item) => {
-          const isActive = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
-          return (
-            <Link key={item.href} href={item.href} className="sidebar-tooltip" data-tooltip={item.label}>
-              <div
-                className="w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-200"
-                style={{
-                  background: isActive ? "var(--accent-primary)" : "transparent",
-                  color: isActive ? "#fff" : "var(--text-sidebar)",
-                  boxShadow: isActive ? "0 2px 8px rgba(217, 119, 87, 0.25)" : "none",
-                }}
-                onMouseEnter={(e) => {
-                  if (!isActive) {
-                    e.currentTarget.style.background = "var(--bg-sidebar-hover)";
-                    e.currentTarget.style.color = "var(--text-sidebar-active)";
-                  }
-                }}
-                onMouseLeave={(e) => {
-                  if (!isActive) {
-                    e.currentTarget.style.background = "transparent";
-                    e.currentTarget.style.color = "var(--text-sidebar)";
-                  }
-                }}
-              >
-                {item.icon}
-              </div>
-            </Link>
-          );
-        })}
-      </nav>
-
-      {/* User avatar */}
-      <Link href="/profile" className="sidebar-tooltip" data-tooltip={user?.firstName || "Profile"}>
+      {/* Mobile overlay */}
+      {isMobile && (
         <div
-          className="w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold overflow-hidden"
-          style={{
-            background: user?.photoUrl ? "transparent" : "var(--accent-primary)",
-            color: "#fff",
-            boxShadow: "0 2px 6px rgba(0,0,0,0.2)",
-          }}
-        >
-          {user?.photoUrl ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={user.photoUrl} alt="" className="w-full h-full object-cover" />
-          ) : (
-            user?.firstName?.charAt(0).toUpperCase() || "?"
+          className={`mobile-overlay ${mobileOpen ? "active" : ""}`}
+          onClick={() => setMobileOpen(false)}
+        />
+      )}
+
+      {/* Sidebar */}
+      <aside
+        className="fixed left-0 top-0 bottom-0 flex flex-col items-center py-4 z-50 transition-transform duration-300"
+        style={{
+          width: isMobile ? "200px" : "72px",
+          background: "var(--bg-sidebar)",
+          borderRight: "1px solid var(--border-subtle)",
+          transform: isMobile && !mobileOpen ? "translateX(-100%)" : "translateX(0)",
+        }}
+      >
+        {/* Header: PS Logo + close on mobile */}
+        <div className={`flex items-center ${isMobile ? "w-full px-4 justify-between" : ""} mb-6`}>
+          <Link href="/" className="group">
+            <div
+              className="w-10 h-10 rounded-lg flex items-center justify-center text-white font-bold text-base transition-all group-hover:scale-105"
+              style={{
+                background: "linear-gradient(135deg, #001E36 0%, #31A8FF 100%)",
+                fontFamily: "var(--font-body)",
+                letterSpacing: "-0.5px",
+                boxShadow: "0 2px 8px rgba(45, 140, 255, 0.3)",
+              }}
+            >
+              Ps
+            </div>
+          </Link>
+          {isMobile && (
+            <button
+              onClick={() => setMobileOpen(false)}
+              className="w-8 h-8 rounded-lg flex items-center justify-center"
+              style={{ color: "var(--text-tertiary)" }}
+              aria-label="Close menu"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                <path d="M18 6L6 18M6 6l12 12" />
+              </svg>
+            </button>
           )}
         </div>
-      </Link>
-    </aside>
+
+        {/* Nav */}
+        <nav className={`flex flex-col ${isMobile ? "w-full px-3" : "items-center"} gap-1 flex-1`}>
+          {navItems.map((item) => {
+            const isActive = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={isMobile ? "" : "sidebar-tooltip"}
+                data-tooltip={item.label}
+              >
+                <div
+                  className={`${isMobile ? "flex items-center gap-3 px-3 py-2.5 rounded-lg" : "w-10 h-10 rounded-lg flex items-center justify-center"} transition-all duration-200`}
+                  style={{
+                    background: isActive ? "var(--accent-primary)" : "transparent",
+                    color: isActive ? "#fff" : "var(--text-sidebar)",
+                    boxShadow: isActive ? "0 2px 8px rgba(45, 140, 255, 0.25)" : "none",
+                  }}
+                  onMouseEnter={(e) => {
+                    if (!isActive) {
+                      e.currentTarget.style.background = "var(--bg-sidebar-hover)";
+                      e.currentTarget.style.color = "var(--text-sidebar-active)";
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (!isActive) {
+                      e.currentTarget.style.background = "transparent";
+                      e.currentTarget.style.color = "var(--text-sidebar)";
+                    }
+                  }}
+                >
+                  {item.icon}
+                  {isMobile && (
+                    <span className="text-sm font-medium">{item.label}</span>
+                  )}
+                </div>
+              </Link>
+            );
+          })}
+        </nav>
+
+        {/* User avatar */}
+        <Link
+          href="/profile"
+          className={isMobile ? "w-full px-3 mb-2" : "sidebar-tooltip"}
+          data-tooltip={user?.firstName || "Profile"}
+        >
+          <div
+            className={`${isMobile ? "flex items-center gap-3 px-3 py-2.5 rounded-lg" : "w-9 h-9 rounded-full flex items-center justify-center"} text-xs font-bold overflow-hidden`}
+            style={{
+              background: user?.photoUrl ? "transparent" : "var(--accent-primary)",
+              color: "#fff",
+              boxShadow: isMobile ? "none" : "0 2px 6px rgba(0,0,0,0.2)",
+            }}
+          >
+            <div
+              className="w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold overflow-hidden flex-shrink-0"
+              style={{
+                background: user?.photoUrl ? "transparent" : "var(--accent-primary)",
+                color: "#fff",
+              }}
+            >
+              {user?.photoUrl ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={user.photoUrl} alt="" className="w-full h-full object-cover" />
+              ) : (
+                user?.firstName?.charAt(0).toUpperCase() || "?"
+              )}
+            </div>
+            {isMobile && (
+              <span className="text-sm font-medium" style={{ color: "var(--text-secondary)" }}>
+                {user?.firstName || "Profile"}
+              </span>
+            )}
+          </div>
+        </Link>
+      </aside>
+    </>
   );
 }

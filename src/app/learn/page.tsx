@@ -112,29 +112,29 @@ export default function LearnPage() {
     state.pathProgress.find((p) => p.id === pathId);
 
   return (
-    <div className="min-h-screen p-8 pb-16">
+    <div className="min-h-screen p-4 md:p-8 pb-16">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
-        <header className="mb-8 opacity-0 animate-fade-in-up">
+        <header className="mb-8 opacity-0 animate-fade-in-up ml-10 md:ml-0">
           <p
-            className="text-sm font-semibold tracking-wide uppercase mb-2"
+            className="text-xs md:text-sm font-semibold tracking-wide uppercase mb-2"
             style={{ color: "var(--accent-primary)", letterSpacing: "0.08em" }}
           >
             Learning Paths
           </p>
           <h1
-            className="text-4xl mb-2 font-semibold tracking-tight"
+            className="text-2xl md:text-4xl mb-2 font-semibold tracking-tight"
             style={{ color: "var(--text-primary)" }}
           >
             From First Pixel to Pro
           </h1>
-          <p style={{ color: "var(--text-secondary)", fontSize: "15px" }}>
+          <p className="text-[13px] md:text-[15px]" style={{ color: "var(--text-secondary)" }}>
             Structured courses designed to take you from any level to mastery. Each path builds on the last.
           </p>
         </header>
 
         {/* Level Filters */}
-        <div className="flex items-center gap-2 mb-8 opacity-0 animate-fade-in-up stagger-1">
+        <div className="flex items-center gap-2 mb-8 opacity-0 animate-fade-in-up stagger-1 overflow-x-auto pb-2">
           {levels.map((level) => (
             <button
               key={level.key}
@@ -153,7 +153,7 @@ export default function LearnPage() {
         </div>
 
         {/* Path Grid */}
-        <div className="grid grid-cols-2 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
           {filtered.map((path, i) => {
             const levelInfo = levels.find((l) => l.key === path.level)!;
             const progress = getPathProgress(path.id);

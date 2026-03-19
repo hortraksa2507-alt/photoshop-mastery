@@ -120,18 +120,18 @@ export default function ShortcutsPage() {
   });
 
   return (
-    <div className="min-h-screen p-8 pb-16">
+    <div className="min-h-screen p-4 md:p-8 pb-16">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <header className="mb-8 opacity-0 animate-fade-in-up">
           <p
-            className="text-sm font-semibold tracking-wide uppercase mb-2"
+            className="text-xs md:text-sm font-semibold tracking-wide uppercase mb-2 ml-10 md:ml-0"
             style={{ color: "var(--accent-primary)", letterSpacing: "0.08em" }}
           >
             Keyboard Shortcuts
           </p>
           <h1
-            className="text-4xl mb-2 font-semibold tracking-tight"
+            className="text-2xl md:text-4xl mb-2 font-semibold tracking-tight"
             style={{ color: "var(--text-primary)" }}
           >
             Speed Is a Superpower
@@ -142,8 +142,8 @@ export default function ShortcutsPage() {
         </header>
 
         {/* Controls */}
-        <div className="flex items-center justify-between mb-6 opacity-0 animate-fade-in-up stagger-1">
-          <div className="flex items-center gap-4">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 mb-6 opacity-0 animate-fade-in-up stagger-1">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
             {/* Search */}
             <div className="relative">
               <input
@@ -151,7 +151,7 @@ export default function ShortcutsPage() {
                 placeholder="Search shortcuts..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-9 pr-4 py-2 rounded-xl text-sm outline-none transition-all focus:ring-2 w-64"
+                className="pl-9 pr-4 py-2 rounded-xl text-sm outline-none transition-all focus:ring-2 w-full sm:w-64"
                 style={{
                   background: "var(--bg-card)",
                   border: "1px solid var(--border-subtle)",
@@ -253,24 +253,24 @@ export default function ShortcutsPage() {
         >
           {/* Header */}
           <div
-            className="grid grid-cols-12 gap-4 px-5 py-3 text-xs font-semibold uppercase tracking-wider"
+            className="grid grid-cols-2 md:grid-cols-12 gap-2 md:gap-4 px-4 md:px-5 py-3 text-xs font-semibold uppercase tracking-wider"
             style={{ background: "var(--bg-secondary)", color: "var(--text-tertiary)" }}
           >
-            <div className="col-span-5">Action</div>
-            <div className="col-span-3">{platform === "mac" ? "Mac" : "Windows"}</div>
-            <div className="col-span-4">Tip</div>
+            <div className="md:col-span-5">Action</div>
+            <div className="md:col-span-3">{platform === "mac" ? "Mac" : "Windows"}</div>
+            <div className="hidden md:block md:col-span-4">Tip</div>
           </div>
 
           {/* Rows */}
           {filtered.map((shortcut, i) => (
             <div
               key={`${shortcut.action}-${shortcut.category}`}
-              className="grid grid-cols-12 gap-4 px-5 py-3 items-center transition-colors hover:bg-[var(--bg-card-hover)]"
+              className="grid grid-cols-2 md:grid-cols-12 gap-2 md:gap-4 px-4 md:px-5 py-3 items-center transition-colors hover:bg-[var(--bg-card-hover)]"
               style={{
                 borderTop: i > 0 ? "1px solid var(--border-subtle)" : "none",
               }}
             >
-              <div className="col-span-5 flex items-center gap-2">
+              <div className="md:col-span-5 flex items-center gap-2">
                 {shortcut.essential && (
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="var(--accent-primary)" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
                 )}
@@ -278,12 +278,12 @@ export default function ShortcutsPage() {
                   {shortcut.action}
                 </span>
               </div>
-              <div className="col-span-3">
+              <div className="md:col-span-3">
                 <span className="kbd">
                   {platform === "mac" ? shortcut.mac : shortcut.windows}
                 </span>
               </div>
-              <div className="col-span-4">
+              <div className="hidden md:block md:col-span-4">
                 {shortcut.tip && (
                   <span className="text-xs leading-relaxed" style={{ color: "var(--text-tertiary)" }}>
                     {shortcut.tip}

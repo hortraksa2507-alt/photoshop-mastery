@@ -81,13 +81,13 @@ export default function ChallengesPage() {
   const completedCount = challenges.filter((c) => isChallengeCompleted(c.id)).length;
 
   return (
-    <div className="min-h-screen p-8 pb-16">
+    <div className="min-h-screen p-4 md:p-8 pb-16">
       <div className="max-w-6xl mx-auto">
         <header className="mb-8 opacity-0 animate-fade-in-up">
-          <p className="text-sm font-semibold tracking-wide uppercase mb-2" style={{ color: "var(--accent-primary)", letterSpacing: "0.08em" }}>
+          <p className="text-xs md:text-sm font-semibold tracking-wide uppercase mb-2 ml-10 md:ml-0" style={{ color: "var(--accent-primary)", letterSpacing: "0.08em" }}>
             Practice Challenges
           </p>
-          <h1 className="text-4xl mb-2 font-semibold tracking-tight" style={{ color: "var(--text-primary)" }}>
+          <h1 className="text-2xl md:text-4xl mb-2 font-semibold tracking-tight" style={{ color: "var(--text-primary)" }}>
             Learn by Doing
           </h1>
           <p style={{ color: "var(--text-secondary)", fontSize: "15px" }}>
@@ -97,7 +97,7 @@ export default function ChallengesPage() {
 
         {/* Stats bar */}
         <div
-          className="flex items-center gap-6 p-5 rounded-2xl border mb-8 opacity-0 animate-fade-in-up stagger-1"
+          className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6 p-4 md:p-5 rounded-2xl border mb-8 opacity-0 animate-fade-in-up stagger-1"
           style={{ background: "var(--bg-card)", borderColor: "var(--border-subtle)", boxShadow: "var(--shadow-sm)" }}
         >
           <div className="flex items-center gap-3">
@@ -111,7 +111,7 @@ export default function ChallengesPage() {
               </p>
             </div>
           </div>
-          <div className="w-px h-8" style={{ background: "var(--border-subtle)" }} />
+          <div className="hidden sm:block w-px h-8" style={{ background: "var(--border-subtle)" }} />
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: "var(--accent-glow)", color: "var(--accent-primary)" }}>
               <IconLightning size={20} />
@@ -123,7 +123,7 @@ export default function ChallengesPage() {
               </p>
             </div>
           </div>
-          <div className="w-px h-8" style={{ background: "var(--border-subtle)" }} />
+          <div className="hidden sm:block w-px h-8" style={{ background: "var(--border-subtle)" }} />
           <div className="flex-1">
             <div className="flex items-center justify-between mb-1">
               <span className="text-xs" style={{ color: "var(--text-tertiary)" }}>Overall Progress</span>
@@ -138,7 +138,7 @@ export default function ChallengesPage() {
         </div>
 
         {/* Difficulty filters */}
-        <div className="flex items-center gap-2 mb-6 opacity-0 animate-fade-in-up stagger-2">
+        <div className="flex items-center gap-2 mb-6 overflow-x-auto pb-2 opacity-0 animate-fade-in-up stagger-2">
           {difficulties.map((diff) => (
             <button
               key={diff.key}
@@ -173,7 +173,7 @@ export default function ChallengesPage() {
                   boxShadow: isExpanded ? "var(--shadow-md)" : "var(--shadow-sm)",
                 }}
               >
-                <div className="flex items-center gap-4 p-5 cursor-pointer" onClick={() => setExpandedChallenge(isExpanded ? null : challenge.id)}>
+                <div className="flex items-center gap-3 md:gap-4 p-4 md:p-5 cursor-pointer" onClick={() => setExpandedChallenge(isExpanded ? null : challenge.id)}>
                   <div
                     className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
                     style={{
@@ -206,7 +206,7 @@ export default function ChallengesPage() {
                       {challenge.description}
                     </p>
                   </div>
-                  <div className="flex items-center gap-4 flex-shrink-0">
+                  <div className="hidden sm:flex items-center gap-4 flex-shrink-0">
                     <div className="text-right">
                       <p className="text-xs" style={{ color: "var(--text-tertiary)" }}>{challenge.estimatedTime}</p>
                       <p className="text-xs font-bold" style={{ color: completed ? "var(--level-beginner)" : "var(--accent-primary)" }}>
@@ -222,7 +222,7 @@ export default function ChallengesPage() {
 
                 {isExpanded && (
                   <div className="px-5 pb-5 animate-fade-in" style={{ borderTop: "1px solid var(--border-subtle)" }}>
-                    <div className="pt-5 pl-16">
+                    <div className="pt-5 pl-0 md:pl-16">
                       <p className="text-sm leading-relaxed mb-4" style={{ color: "var(--text-secondary)" }}>
                         {challenge.description}
                       </p>

@@ -24,14 +24,14 @@ export default function ProfilePage() {
   const levelTitle = levelTitles[Math.min(level - 1, levelTitles.length - 1)];
 
   return (
-    <div className="min-h-screen p-8 pb-16">
+    <div className="min-h-screen p-4 md:p-8 pb-16">
       <div className="max-w-3xl mx-auto">
         {/* Profile Header */}
         <div
-          className="rounded-2xl border p-8 mb-8 opacity-0 animate-fade-in-up"
+          className="rounded-2xl border p-5 md:p-8 mb-8 opacity-0 animate-fade-in-up"
           style={{ background: "var(--bg-card)", borderColor: "var(--border-subtle)", boxShadow: "var(--shadow-sm)" }}
         >
-          <div className="flex items-center gap-6">
+          <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
             {/* Avatar */}
             <div
               className="w-20 h-20 rounded-2xl flex items-center justify-center text-2xl font-bold overflow-hidden flex-shrink-0"
@@ -44,8 +44,8 @@ export default function ProfilePage() {
                 user?.firstName?.charAt(0).toUpperCase() || "?"
               )}
             </div>
-            <div className="flex-1">
-              <h1 className="text-2xl font-semibold mb-1" style={{ color: "var(--text-primary)" }}>
+            <div className="flex-1 text-center sm:text-left">
+              <h1 className="text-xl sm:text-2xl font-semibold mb-1" style={{ color: "var(--text-primary)" }}>
                 {user?.firstName} {user?.lastName}
               </h1>
               {user?.username && (
@@ -53,7 +53,7 @@ export default function ProfilePage() {
                   @{user.username}
                 </p>
               )}
-              <div className="flex items-center gap-2">
+              <div className="flex items-center justify-center sm:justify-start gap-2 flex-wrap">
                 <span
                   className="text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full"
                   style={{ background: "var(--accent-glow)", color: "var(--accent-primary)" }}
@@ -89,7 +89,7 @@ export default function ProfilePage() {
         </div>
 
         {/* Stats Grid */}
-        <div className="grid grid-cols-3 gap-4 mb-8">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 mb-8">
           {[
             { label: "Total XP", value: state.totalXP, Icon: IconLightning },
             { label: "Lessons Done", value: state.lessonsCompleted, Icon: IconBook },

@@ -55,10 +55,10 @@ export default function PathDetailPage() {
   };
 
   return (
-    <div className="min-h-screen p-8 pb-16">
+    <div className="min-h-screen p-4 md:p-8 pb-16">
       <div className="max-w-4xl mx-auto">
         {/* Back link */}
-        <Link href="/learn" className="inline-flex items-center gap-1 text-sm font-medium mb-6 transition-opacity hover:opacity-70" style={{ color: "var(--accent-primary)" }}>
+        <Link href="/learn" className="inline-flex items-center gap-1 text-sm font-medium mb-6 ml-10 md:ml-0 transition-opacity hover:opacity-70" style={{ color: "var(--accent-primary)" }}>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M15 18l-6-6 6-6" /></svg>
           Back to Learning Paths
         </Link>
@@ -71,7 +71,7 @@ export default function PathDetailPage() {
             </span>
             <span className="text-xs" style={{ color: "var(--text-tertiary)" }}>{path.lessons.length} lessons</span>
           </div>
-          <h1 className="text-3xl mb-2 font-semibold tracking-tight" style={{ color: "var(--text-primary)" }}>
+          <h1 className="text-2xl md:text-3xl mb-2 font-semibold tracking-tight" style={{ color: "var(--text-primary)" }}>
             {path.title}
           </h1>
           <p className="text-base" style={{ color: "var(--text-secondary)" }}>{path.description}</p>
@@ -159,7 +159,7 @@ export default function PathDetailPage() {
                 {/* Expanded lesson content */}
                 {isActive && (
                   <div className="px-4 pb-5 animate-fade-in" style={{ borderTop: "1px solid var(--border-subtle)" }}>
-                    <div className="pt-5 pl-12">
+                    <div className="pt-5 pl-0 md:pl-12">
                       {/* Lesson description */}
                       <p className="text-sm leading-relaxed mb-6" style={{ color: "var(--text-secondary)" }}>
                         {lesson.description}
