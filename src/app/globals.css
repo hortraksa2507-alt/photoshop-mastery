@@ -1,26 +1,247 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* ═══════════════════════════════════════════
+     Claude Desktop Dark Theme
+     Warm, sophisticated, Anthropic-inspired
+     ═══════════════════════════════════════════ */
+
+  /* Backgrounds — warm dark tones */
+  --bg-primary: #1A1915;
+  --bg-secondary: #21201B;
+  --bg-tertiary: #2B2A25;
+  --bg-sidebar: #141310;
+  --bg-sidebar-hover: #2B2A25;
+  --bg-sidebar-active: #3D3C37;
+  --bg-card: #24231E;
+  --bg-card-hover: #2E2D27;
+  --bg-input: #2E2D27;
+
+  /* Text — warm neutrals */
+  --text-primary: #E8E4DA;
+  --text-secondary: #A39E93;
+  --text-tertiary: #6B6760;
+  --text-inverse: #1A1915;
+  --text-sidebar: #7D7A72;
+  --text-sidebar-active: #E8E4DA;
+
+  /* Accent — Anthropic terracotta/coral */
+  --accent-primary: #D97757;
+  --accent-primary-hover: #C4683E;
+  --accent-secondary: #E8956F;
+  --accent-tertiary: #F0B898;
+  --accent-glow: rgba(217, 119, 87, 0.12);
+
+  /* Borders */
+  --border-subtle: #33322D;
+  --border-medium: #44433D;
+  --border-accent: #D97757;
+
+  /* Shadows — warm-tinted */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.25);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.45);
+  --shadow-glow: 0 0 20px rgba(217, 119, 87, 0.12);
+
+  /* Radii */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+
+  /* Fonts */
+  --font-display: var(--font-inter), system-ui, sans-serif;
+  --font-body: var(--font-inter), system-ui, sans-serif;
+
+  /* Level colors — warm palette */
+  --level-beginner: #5DB88C;
+  --level-intermediate: #D4B85C;
+  --level-advanced: #D97757;
+  --level-pro: #B07CC6;
+
+  /* Claude accent bar */
+  --claude-gradient: linear-gradient(90deg, #D97757 0%, #E8956F 50%, #D97757 100%);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-background: var(--bg-primary);
+  --color-foreground: var(--text-primary);
+  --font-sans: var(--font-body);
+  --font-serif: var(--font-display);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-medium) transparent;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-medium); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-tertiary); }
+
+/* ═══════════════════════════════════════════
+   Animations
+   ═══════════════════════════════════════════ */
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-12px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes progressFill {
+  from { width: 0; }
+}
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(217, 119, 87, 0); }
+  50% { box-shadow: 0 0 16px 4px rgba(217, 119, 87, 0.15); }
+}
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.animate-fade-in-up { animation: fadeInUp 0.5s ease-out forwards; }
+.animate-fade-in { animation: fadeIn 0.4s ease-out forwards; }
+.animate-slide-in-left { animation: slideInLeft 0.4s ease-out forwards; }
+
+.stagger-1 { animation-delay: 0.05s; }
+.stagger-2 { animation-delay: 0.1s; }
+.stagger-3 { animation-delay: 0.15s; }
+.stagger-4 { animation-delay: 0.2s; }
+.stagger-5 { animation-delay: 0.25s; }
+.stagger-6 { animation-delay: 0.3s; }
+.stagger-7 { animation-delay: 0.35s; }
+.stagger-8 { animation-delay: 0.4s; }
+
+/* ═══════════════════════════════════════════
+   Card & Interactive Elements
+   ═══════════════════════════════════════════ */
+
+.card-hover {
+  transition: all 0.25s cubic-bezier(0.2, 0, 0, 1);
+}
+.card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--border-accent);
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.progress-bar {
+  animation: progressFill 1s ease-out forwards;
+  animation-delay: 0.3s;
+}
+
+/* Keyboard shortcut badge — Claude style */
+.kbd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  height: 28px;
+  padding: 0 8px;
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-medium);
+  border-radius: 6px;
+  box-shadow: 0 1px 0 1px rgba(0, 0, 0, 0.15);
+}
+
+/* Tool icon container */
+.tool-icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+/* ═══════════════════════════════════════════
+   Sidebar Tooltip
+   ═══════════════════════════════════════════ */
+
+.sidebar-tooltip { position: relative; }
+.sidebar-tooltip::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  left: calc(100% + 14px);
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 6px 12px;
+  background: var(--bg-card);
+  color: var(--text-primary);
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: 8px;
+  border: 1px solid var(--border-subtle);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s;
+  z-index: 100;
+  box-shadow: var(--shadow-md);
+}
+.sidebar-tooltip:hover::after { opacity: 1; }
+
+/* Claude Desktop top accent stripe */
+.claude-stripe {
+  height: 2px;
+  background: var(--claude-gradient);
+}
+
+/* ═══════════════════════════════════════════
+   Claude-style message/section containers
+   ═══════════════════════════════════════════ */
+
+.claude-surface {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.claude-surface-hover {
+  transition: all 0.2s ease;
+}
+.claude-surface-hover:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--border-medium);
+}
+
+/* Pro tip / highlight box */
+.claude-highlight {
+  background: var(--accent-glow);
+  border-left: 3px solid var(--accent-primary);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  padding: 12px 16px;
 }
